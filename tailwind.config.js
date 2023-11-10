@@ -22,19 +22,27 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', ...fontFamily.sans],
+        sans: [
+          'var(--font-ia-quattro)',
+          'var(--font-ia-mono)',
+          'var(--font-noto-sans-sc)',
+          'var(--font-noto-sans-tc)',
+          ...fontFamily.sans,
+        ],
       },
       colors: {
-        primary: colors.pink,
-        gray: colors.gray,
+        primary: colors.amber,
+        gray: colors.neutral,
       },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.primary.600'),
+              // color: theme('colors.primary.500'),
               '&:hover': {
-                color: `${theme('colors.primary.600')}`,
+                // color: `${theme('colors.primary.600')}`,
+                color: `${theme('colors.primary.700')}`,
               },
               code: { color: theme('colors.primary.400') },
             },
@@ -59,7 +67,11 @@ module.exports = {
               },
               code: { color: theme('colors.primary.400') },
             },
-            'h1,h2,h3,h4,h5,h6': {
+            'h1,h2': {
+              fontWeight: '700',
+            },
+            'h3,h4,h5,h6': {
+              fontWeight: '600',
               color: theme('colors.gray.100'),
             },
           },

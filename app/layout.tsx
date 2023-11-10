@@ -1,7 +1,8 @@
 import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 
-import { Space_Grotesk } from 'next/font/google'
+import { Noto_Sans_SC, Noto_Sans_TC } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -11,10 +12,56 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 
-const space_grotesk = Space_Grotesk({
-  subsets: ['latin'],
+const ia_writer_mono = localFont({
+  src: [
+    {
+      path: './fonts/iAWriterMonoV.ttf',
+      style: 'normal',
+    },
+    {
+      path: './fonts/iAWriterMonoV-Italic.ttf',
+      style: 'italic',
+    },
+  ],
   display: 'swap',
-  variable: '--font-space-grotesk',
+  variable: '--font-ia-mono',
+})
+
+const ia_writer_quattro = localFont({
+  src: [
+    {
+      path: './fonts/iAWriterQuattroV.ttf',
+      style: 'normal',
+    },
+    {
+      path: './fonts/iAWriterQuattroV-Italic.ttf',
+      style: 'italic',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-ia-quattro',
+})
+
+const noto_sans_sc = Noto_Sans_SC({
+  display: 'swap',
+  variable: '--font-noto-sans-sc',
+  subsets: ['latin'],
+})
+
+const noto_sans_tc = Noto_Sans_TC({
+  display: 'swap',
+  variable: '--font-noto-sans-tc',
+  subsets: ['latin'],
+  /*
+  weight: [
+    '100',
+    '300',
+    '400',
+    '500',
+    '700',
+    '900',
+  ]
+  */
 })
 
 export const metadata: Metadata = {
@@ -61,7 +108,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} scroll-smooth`}
+      // className={`${ia_writer_quattro.variable} ${ia_writer_mono.variable} ${ia_writer_quattro_italic.variable} ${ia_writer_mono_italic.variable} ${noto_sans_sc.variable} ${noto_sans_tc.variable} scroll-smooth`}
+      className={`${ia_writer_quattro.variable} ${ia_writer_mono.variable} ${noto_sans_sc.variable} ${noto_sans_tc.variable} scroll-smooth`}
+      // className={`${ia_writer_quattro.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
@@ -73,7 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
+      <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
