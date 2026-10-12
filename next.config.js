@@ -61,6 +61,13 @@ const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
+// svgo's convertPathData crashes on the Q/T curves in data/favicon.svg, so skip that step.
+const svgrOptions = {
+  svgoConfig: {
+    plugins: [{ name: 'preset-default', params: { overrides: { convertPathData: false } } }],
+  },
+}
+
 module.exports = () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
   return plugins.reduce((acc, next) => next(acc), {
@@ -72,7 +79,7 @@ module.exports = () => {
       root: process.cwd(),
       rules: {
         '*.svg': {
-          loaders: ['@svgr/webpack'],
+          loaders: [{ loader: '@svgr/webpack', options: svgrOptions }],
           as: '*.js',
         },
       },
@@ -98,7 +105,7 @@ module.exports = () => {
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
+        use: [{ loader: '@svgr/webpack', options: svgrOptions }],
       })
 
       return config
